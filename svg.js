@@ -7,31 +7,37 @@ var spending2021 = [123, 10.7, 473, 77.9, 27.3, 1120, 33.5, 31, 13.9, 29.5, 45.6
 var spending2018 = [132, 9.56, 491, 65.5, 26.1, 1010, 38.1, 34.7, 13.2, 31.1, 46.6, 23.2, 81.2, 627, 154];
 
 var chart = d3.select(".chart");
-
 var bar = chart.selectAll("div");
-
-var display = function(year){
-
-    if (year == 2018){
-	var barUpdate = bar.data(spending2018);
-    }
-    else{
-	var barUpdate = bar.data(spending2021);
-    }
-    
-    var barEnter = barUpdate.enter().append("div");
-    
-    barEnter.transition().duration(3500).style("width", function(d){
+var barUpdate = bar.data(spending2018);
+var barEnter = barUpdate.enter().append("div");
+barEnter.transition().duration(3500).style("width", function(d){
 	return d  + "px";
     });
     
-    barEnter.text(function(d){
+barEnter.text(function(d){
 	return d;
     });
 
+
+
+var display = function(input){
+
+    bar = chart.selectAll("div");
+
+    barUpdate = bar.data(input);
+
+    barUpdate = bar.data(spending2018);
+    barEnter = barUpdate.enter().append("div");
+    barEnter.transition().duration(3500).style("width", function(d){
+	    return d  + "px";
+	});
+    
+    barEnter.text(function(d){
+	    return d;
+	});
 }
 
-var switchYear = function(e){
+/*var switchYear = function(e){
     bar.innerHTML = "";
     if(year == 2018){
 	year = 2021;
@@ -40,8 +46,8 @@ var switchYear = function(e){
 	year = 2018;
     }
     display(year);
-}
+    }*/
 
 //display(year);
 
-switchButt.addEventListener("click", switchYear);
+switchButt.addEventListener("click", function() {display(spending2021)});
